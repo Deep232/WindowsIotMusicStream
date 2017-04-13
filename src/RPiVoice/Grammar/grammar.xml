@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<grammar
+  version="1.0"
+  xml:lang="en-US"
+  root="topLevel"
+  xmlns="http://www.w3.org/2001/06/grammar"
+  tag-format="semantics/1.0">
+
+   <rule id="topLevel">
+      <item>
+        <ruleref uri="#playCommands" />
+      <tag> out.cmd = rules.playCommands; </tag>
+      </item>
+<!--     <item>-->
+<!--        <ruleref uri="#pauseCommands" />-->
+<!--     <tag> out.cmd = rules.pauseCommands; </tag>-->
+<!--      </item>-->
+<!--     <item>-->
+<!--        <ruleref uri="#stopCommands" />-->
+<!--      </item>-->
+<!--    <ruleref uri="#playCommands" />-->
+<!--    <ruleref uri="#pauseCommands" />-->
+<!--    <ruleref uri="#stopCommands" />-->
+  </rule>
+
+  <rule id="playCommands">
+   <item>
+        <ruleref uri="#playAction" />
+        <tag> out = rules.latest(); </tag>
+   
+      </item>
+    <item> the </item>
+  <item>
+        <ruleref uri="#fileWords" />
+      </item>
+  </rule>
+
+  <rule id="playAction">
+    <one-of>
+      <item> play <tag> out="PLAY"; </tag></item>
+      <item> start <tag> out="PLAY"; </tag></item>
+      <item> begin <tag> out="PLAY"; </tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="pauseCommands">
+     <item>
+        <ruleref uri="#pauseAction" />
+        <tag> out =rules.latest(); </tag>
+   
+      </item>
+    <item> the </item>
+     <item>
+        <ruleref uri="#fileWords" />
+      </item>
+  </rule>
+
+  <rule id="pauseAction">
+    <one-of>
+      <item> pause <tag> out="PAUSE"; </tag></item>
+      <item> suspend <tag> out="PAUSE"; </tag></item>
+      <item> hold <tag> out="PAUSE"; </tag></item>
+    </one-of>
+  </rule>
+
+<rule id="stopCommands">
+    <item>
+        <ruleref uri="#stopAction" />
+        <tag> out.cmd=rules.latest(); </tag>
+   
+      </item>
+    <item> the </item>
+     <item>
+        <ruleref uri="#fileWords" />
+      </item>
+  </rule>
+
+  <rule id="stopAction">
+    <one-of>
+      <item> stop <tag> out="STOP"; </tag></item>
+      <item> end <tag> out="STOP"; </tag></item>
+      <item> quit <tag> out="STOP"; </tag></item>
+    </one-of>
+  </rule>
+
+  <rule id="fileWords">
+    <one-of>
+      <item> song </item>
+      <item> tune </item>
+      <item> track </item>
+      <item> item </item>
+    </one-of>
+  </rule>
+  
+      
+    
+
+  
+  <rule id="automationCommands">
+    <item>
+      <item> turn </item>
+      <item>
+        <ruleref uri="#commandActions" />
+        <tag> out.cmd=rules.latest(); </tag>
+      </item>
+      <one-of>
+        <item>
+          <ruleref uri="#locationActions" />
+          <tag> out.target=rules.latest(); </tag>
+        </item>
+        <item>
+          <ruleref uri="#colorActions" />
+          <tag> out.target=rules.latest(); </tag>
+        </item>
+      </one-of>
+      <item>
+        <ruleref uri="#deviceActions" />
+        <tag> out.device=rules.latest(); </tag>
+      </item>
+    </item>
+  </rule>
+
+  <rule id="commandActions">
+    <one-of>
+      <item>
+        on <tag> out="ON"; </tag>
+      </item>
+      <item>
+        off <tag> out="OFF"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="locationActions">
+    <one-of>
+      <item>
+        bedroom <tag> out="BEDROOM"; </tag>
+      </item>
+      <item>
+        porch <tag> out="PORCH"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="colorActions">
+    <one-of>
+      <item>
+        red <tag> out="RED"; </tag>
+      </item>
+      <item>
+        green <tag> out="GREEN"; </tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="deviceActions">
+    <one-of>
+      <item>
+        light <tag> out="LIGHT"; </tag>
+      </item>
+      <item>
+        led <tag> out="LED"; </tag>
+      </item>
+    </one-of>
+  </rule>
+</grammar>
